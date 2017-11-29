@@ -33,7 +33,7 @@ app = Flask(__name__)
 @app.route('/catalog/')
 def homePage():
     categories = dbSession.query(Item).distinct(Item.category).group_by(Item.category)
-    print 'Testing' + categories
+    print categories
 
     items = dbSession.query(Item).order_by('-Item.id').limit(10)
     return render_template('home.html',
@@ -76,7 +76,7 @@ def addItem():
     )
     dbSession.add(newItem)
     dbSession.commit()
-    return redirect(url_for('category', category=newItem['category']))
+    return redirect(url_for('catalog'))
 
 @app.route('/items/<int:itemID>/edit/')
 def editItemForm(itemID):
