@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
 
-from classes.main import Base
+from models.main import Base
 
-from classes.user import User
-from classes.item import Item
+from models.user import User
+from models.item import Item
 
 DB_SERVER = 'localhost'
 DB_USER = 'catalog'

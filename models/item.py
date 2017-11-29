@@ -1,7 +1,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
-from classes.main import Main
+from models.main import Main
 from sqlalchemy.orm import relationship
-from classes.user import User
+from models.user import User
 
 class Item(Main):
     __tablename__ = 'items'

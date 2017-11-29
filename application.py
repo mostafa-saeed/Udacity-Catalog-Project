@@ -4,8 +4,8 @@ from sqlalchemy.orm import sessionmaker
 
 from database_setup import Base, CONNECTION_STRING
 
-from classes.user import User
-from classes.item import Item
+from models.user import User
+from models.item import Item
 
 
 engine = create_engine(CONNECTION_STRING)
