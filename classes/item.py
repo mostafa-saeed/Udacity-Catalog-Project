@@ -9,7 +9,7 @@ class Item(Main):
     description = Column(String, nullable=False)
     category = Column(String, nullable=False)
     createdBy = Column(Integer, ForeignKey('users.id'))
-    user = relationship(User)
+    user = relationship(User, backref = 'users'))
 
     @property
     def serialize(self):
