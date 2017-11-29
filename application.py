@@ -13,7 +13,7 @@ session = DBSession()
 
 
 
-from flask import Flask
+from flask import Flask, render_template, request, redirect, jsonify, url_for
 
 
 
@@ -21,10 +21,7 @@ app = Flask(__name__)
 @app.route('/items/')
 def getAllItems():
     items = session.query(Item).all()
-    return items
-
-
-
+    return jsonify({'items': items})
 
 
 
