@@ -5,9 +5,8 @@ from sqlalchemy.orm import sessionmaker
 
 from database_setup import Base, CONNECTION_STRING
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'class'))
-from user import User
-from item import Item
+from classes.user import User
+from classes.item import Item
 
 
 engine = create_engine(CONNECTION_STRING)
