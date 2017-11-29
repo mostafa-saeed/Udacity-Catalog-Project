@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
-#Base = declarative_base()
 from classes.main import Base
 
 from classes.user import User
