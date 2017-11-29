@@ -11,13 +11,6 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-testItem = Item(name='Test',
-                description='testing',
-                category='CatalogItem',
-                createdBy=1
-                )
-session.add(testItem)
-session.commit()
 
 
 from flask import Flask
