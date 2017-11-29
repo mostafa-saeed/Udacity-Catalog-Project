@@ -1,10 +1,13 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from classes.user import User
-from classes.main import Main
 
-class Item(Main):
+Base = declarative_base()
+
+class Item(Base):
     __tablename__ = 'items'
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
     description = Column(String, nullable=False)
     category = Column(String, nullable=False)
