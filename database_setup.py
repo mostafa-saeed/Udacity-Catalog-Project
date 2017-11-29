@@ -1,9 +1,11 @@
-import sys, os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
 
 Base = declarative_base()
+
+from classes.user import User
+from classes.item import Item
 
 DB_SERVER = 'localhost'
 DB_USER = 'catalog'
