@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
-import main
+from classes.main import Main
 
-class User(main):
+class User(Main):
     __tablename__ = 'users'
     email = Column(String, nullable=False)
