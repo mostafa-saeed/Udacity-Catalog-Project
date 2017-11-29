@@ -20,7 +20,12 @@ session = DBSession()
 
 
 app = Flask(__name__)
-@app.route('/items/')
+
+# isAuthinticated && isAuthorized
+# responses
+# Google+ Login
+
+@app.route('/catalog/api/')
 def getAllItems():
     items = session.query(Item).all()
     return jsonify(items=[c.serialize for c in items])
