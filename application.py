@@ -120,6 +120,6 @@ def getAllItems():
     items = dbSession.query(Item).all()
     return jsonify(items=[c.serialize for c in items])
 
-app.debug = True
-#if __name__ == "__main__":
-app.run()
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
