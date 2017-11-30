@@ -11,7 +11,7 @@
         {{ item.description }}
         </div>
         <div class="mdl-card__actions">
-        <a href="#" class="mdl-button">{{ item.category }}</a>
+        <a href="{{ url_for('getCategory', categoryName=item.category) }}" class="mdl-button">{{ item.category }}</a>
         </div>
     </div>
     
