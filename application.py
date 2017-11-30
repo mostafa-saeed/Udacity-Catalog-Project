@@ -23,7 +23,7 @@ def generateRandomToken():
 
 #=======================================================================
 
-app = Flask(__name__, static_folder='/assets')
+app = Flask(__name__)
 
 # isAuthenticated && isAuthorized
 # responses
@@ -118,4 +118,4 @@ def getAllItems():
     return jsonify(items=[c.serialize for c in items])
 
 app.debug = True
-app.run(host='0.0.0.0', port=5000)
+app.run(host='0.0.0.0')
