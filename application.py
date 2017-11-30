@@ -1,6 +1,3 @@
-import sys, os
-sys.path.append(os.path.dirname(__file__))
-
 from flask import Flask, render_template, request, redirect, jsonify, url_for, session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
