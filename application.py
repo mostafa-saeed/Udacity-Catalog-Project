@@ -32,7 +32,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/catalog/')
 def homePage():
-    categories = dbSession.query(Item).distinct(Item.category).group_by(Item.category).all()
+    categories = dbSession.query(Item).distinct(Item.category).group_by(Item.category, Item.id).all()
     print categories
 
     items = dbSession.query(Item).order_by('-Item.id').limit(10)
