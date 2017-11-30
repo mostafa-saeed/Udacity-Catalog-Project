@@ -23,6 +23,12 @@ def generateRandomToken():
         string.ascii_uppercase + string.digits) for x in xrange(32)
     )
 
+def getCategories():
+    categories = dbSession.query(Item).distinct(Item.category).group_by(Item.category, Item.id).all()
+    categoriesArray = []
+    for category in categories:
+        categoriesArray.append(category.category)
+    return categoriesArray
 
 #=======================================================================
 
@@ -33,9 +39,9 @@ app = Flask(__name__)
 # Google+ Login
 
 @app.route('/')
-@app.route('/catalog/')
+#@app.route('/catalog/')
 def homePage():
-    categories = dbSession.query(Item).distinct(Item.category).group_by(Item.category, Item.id).all()
+    categories = getCategories()
     print categories
 
     items = dbSession.query(Item).order_by(Item.id.desc()).limit(10)
