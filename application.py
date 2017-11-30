@@ -23,12 +23,13 @@ def generateRandomToken():
         string.ascii_uppercase + string.digits) for x in xrange(32)
     )
 
+''' Get Categories from items table'''
 def getCategories():
-    categories = dbSession.query(Item).distinct(Item.category).group_by(Item.category, Item.id).all()
-    categoriesArray = []
-    for category in categories:
-        categoriesArray.append(category.category)
-    return categoriesArray
+    itemsCategories = dbSession.query(Item).distinct(Item.category).group_by(Item.category, Item.id).all()
+    categories = []
+    for item in itemsCategories:
+        categories.append(str(item.category))
+    return categories
 
 #=======================================================================
 
@@ -42,8 +43,6 @@ app = Flask(__name__)
 #@app.route('/catalog/')
 def homePage():
     categories = getCategories()
-    print categories
-
     items = dbSession.query(Item).order_by(Item.id.desc()).limit(10)
     return render_template('home.html',
         categories=categories,
@@ -70,7 +69,7 @@ def getItem(itemID):
 
 @app.route('/items/add/')
 def addItemForm():
-    categories = dbSession.query(Item).distinct(Item.category).group_by(Item.category)
+    categories = getCategories()
     return render_template('itemForm.html',
         categories=categories
     )
@@ -90,7 +89,7 @@ def addItem():
 @app.route('/items/<int:itemID>/edit/')
 def editItemForm(itemID):
     item = dbSession.query(Item).filter_by(id=itemID).one()
-    categories = dbSession.query(Item).distinct(Item.category).group_by(Item.category)
+    categories = getCategories()
     return render_template('itemForm.html',
         item=item,
         categories=categories

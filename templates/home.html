@@ -2,10 +2,22 @@
 
 {% block content %}
 
-    <ul>
-        {% for item in items %}
-        <li>{{item.name}}</li>
-        {% endfor %}
-    </ul>
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    {% for item in items %}
+    
+    <div class="mdl-card mdl-cell mdl-cell--12-col">
+        <div class="mdl-card__supporting-text">
+        <h4>{{ item.name }}</h4>
+        {{ item.description }}
+        </div>
+        <div class="mdl-card__actions">
+        <a href="#" class="mdl-button">{{ item.category }}</a>
+        </div>
+    </div>
+    
+    {% endfor %}
+</section>
 
 {% endblock %}
+
+
