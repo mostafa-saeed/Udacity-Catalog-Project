@@ -1,8 +1,5 @@
-import sys
-path = '/home/ubuntu/Udacity-Catalog-Project'
-
-if path not in sys.path:
-    sys.path.insert(0, path)
+import sys, os
+sys.path.append(os.path.dirname(__file__))
 
 from flask import Flask, render_template, request, redirect, jsonify, url_for, session
 from sqlalchemy import create_engine
