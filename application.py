@@ -23,7 +23,7 @@ def generateRandomToken():
 
 #=======================================================================
 
-app = Flask(__name__)
+app = Flask(__name__, 'assets')
 
 # isAuthenticated && isAuthorized
 # responses
