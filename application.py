@@ -23,8 +23,7 @@ def generateRandomToken():
 
 #=======================================================================
 
-app = Flask(__name__, static_folder='assets')
-app.static_url_path = '/assets'
+app = Flask(__name__, static_folder='/assets')
 
 # isAuthenticated && isAuthorized
 # responses
