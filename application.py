@@ -35,7 +35,7 @@ def homePage():
     categories = dbSession.query(Item).distinct(Item.category).group_by(Item.category, Item.id).all()
     print categories
 
-    items = dbSession.query(Item).order_by('-Item.id').limit(10)
+    items = dbSession.query(Item).order_by(Item.id.desc()).limit(10)
     return render_template('home.html',
         categories=categories,
         items=items,
