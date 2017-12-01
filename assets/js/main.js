@@ -31,7 +31,7 @@ function onSignIn(googleUser) {
             contentType: 'application/octet-stream; charset=utf-8',
             success: function(result) {
                 console.log('Auth Done', result);
-                window.location.href = "/catalog";
+                window.location.href = "/";
             },
             error: function(jqXHR, status, err) {
                 console.log('Error', err);

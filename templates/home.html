@@ -12,7 +12,9 @@
                 <div class="section__circle-container__circle mdl-color--primary"></div>
             </div>
             <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-                <h5>{{ item.name }}</h5>
+                <h5>
+                    <a href="{{ url_for('getItem', itemID=item.id) }}">{{ item.name }}</a>
+                </h5>
                 <p> {{ item.description }} </p>
                 Category: <a href="{{ url_for('getCategory', categoryName=item.category) }}">{{ item.category }}</a>
             </div>

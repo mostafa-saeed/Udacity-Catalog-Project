@@ -66,8 +66,7 @@ def homePage():
     items = dbSession.query(Item).order_by(Item.id.desc()).limit(10)
     return render_template('home.html',
         categories=categories,
-        items=items,
-        isAuthenticated=hasattr(session, 'email')
+        items=items
     )
 
 @app.route('/category/<string:categoryName>/')
@@ -75,16 +74,14 @@ def homePage():
 def getCategory(categoryName):
     items = dbSession.query(Item).filter_by(category=categoryName).all()
     return render_template('category.html',
-        items=items,
-        isAuthenticated=hasattr(session, 'email')
+        items=items
     )
 
 @app.route('/items/<int:itemID>/')
 def getItem(itemID):
     item = dbSession.query(Item).filter_by(id=itemID).one()
     return render_template('item.html',
-        item=item,
-        isAuthenticated=hasattr(session, 'email')
+        item=item
     )
 
 @app.route('/items/add/')
@@ -100,7 +97,7 @@ def addItem():
         name = request.form['name'],
         description = request.form['description'],
         category = request.form['category'],
-        createdBy = 1
+        createdBy = session['user_id']
     )
     dbSession.add(newItem)
     dbSession.commit()
@@ -169,7 +166,7 @@ def gPlusLogin():
 
     session['email'] = result['email']
     session['user_id'] = user.id
-    
+
     response = make_response(json.dumps('Successfully connected user.'), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
