@@ -39,3 +39,25 @@ function onSignIn(googleUser) {
         });
     }
 }
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+
+        $.ajax({
+            type: 'POST',
+            url: '/gconnect?state=' + state,
+            processData: false,
+            data: id_token,
+            contentType: 'application/octet-stream; charset=utf-8',
+            success: function(result) {
+                console.log('Auth Done', result);
+                window.location.href = "/";
+            },
+            error: function(jqXHR, status, err) {
+                console.log('Error', err);
+            }
+        });
+
+    });
+}

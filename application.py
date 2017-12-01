@@ -55,8 +55,6 @@ app = Flask(__name__)
 app.secret_key = generateRandomToken()
 
 # isAuthenticated && isAuthorized
-# responses
-# Google+ Login
 
 @app.route('/')
 #@app.route('/catalog/')
@@ -74,6 +72,7 @@ def homePage():
 def getCategory(categoryName):
     items = dbSession.query(Item).filter_by(category=categoryName).all()
     return render_template('category.html',
+        categoryName=categoryName,
         items=items
     )
 
@@ -169,6 +168,12 @@ def gPlusLogin():
     response = make_response(json.dumps('Successfully connected user.'), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
+
+@app.route('/gdisconnect', methods=['POST'])
+def gPlusLogout():
+    del session['email']
+    del session['user_id']
+
 
 if __name__ == "__main__":
     app.debug = True

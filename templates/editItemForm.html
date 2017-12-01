@@ -1,0 +1,42 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<section class="section-center section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    <div class="mdl-card mdl-cell mdl-cell--12-col">
+        <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+            <h4 class="mdl-cell mdl-cell--12-col">Update: {{ item.name }}</h4>
+            
+            <form action="/items/{{ item.id }}/" method="PUT">
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" value="{{ item.name }}" type="text" id="name" name="name">
+                    <label class="mdl-textfield__label" for="name">Item Name</label>
+                </div>
+            
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <textarea class="mdl-textfield__input" type="text" name="description" rows= "3" id="description" >{{ item.description }}</textarea>
+                    <label class="mdl-textfield__label" for="description">Item Description</label>
+                </div>
+            
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" value="{{ item.category }}" id="category" name="category" type="text" list="categories">
+                    <label class="mdl-textfield__label" for="category">Item Category</label>
+                    <datalist id="categories">
+                        {% for category in categories %}
+                            <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </datalist>
+                </div>
+                
+            
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
+                Update Item
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

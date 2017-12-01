@@ -1,0 +1,31 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    <div class="mdl-card mdl-cell mdl-cell--12-col">
+        <div class="mdl-card__supporting-text">
+            <h4>{{ item.name }}</h4>
+            {{ item.description }}
+        </div>
+        <div class="mdl-card__actions">
+            <a href="{{ url_for('getCategory', categoryName=item.category) }}" class="mdl-button">More in {{ item.category }}</a>
+        </div>
+    </div>
+    
+    {% if 'email' in session %}
+    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="menu">
+        <svg fill="#616161" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+    </button>
+    <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="menu">
+        <li class="mdl-menu__item"><a href="{{ url_for('editItemForm', itemID=item.id) }}">Edit</a></li>
+        <li class="mdl-menu__item"><a href="{{ url_for('deleteItemForm', itemID=item.id) }}">Delete</a></li>
+    </ul>
+    {% endif %}
+
+</section>
+
+{% endblock %}
