@@ -146,7 +146,7 @@ def getAllItems():
     items = dbSession.query(Item).all()
     return jsonify(items=[c.serialize for c in items])
 
-@app.route('/gconnect/')
+@app.route('/gconnect')
 def gPlusLogin():
     if request.args.get('state') != session['state']:
         response = unauthorizedResponse()
