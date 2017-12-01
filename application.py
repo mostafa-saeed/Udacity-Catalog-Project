@@ -14,11 +14,8 @@ dbSession = DBSession()
 
 import json, random, string
 
-# from oauth2client.client import flow_from_clientsecrets
-# from oauth2client.client import FlowExchangeError
-
-from google.oauth2 import id_token
-from google.auth.transport import requests
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.client import FlowExchangeError
 
 #=======================================================================
 def generateRandomToken():
@@ -155,19 +152,9 @@ def gPlusLogin():
         response = unauthorizedResponse()
         return response
 
-    access_token = request.data
+    id_token = request.data
 
-    try:
-        idinfo = id_token.verify_oauth2_token(access_token, requests.Request(), GOOGLE_CLIENT_ID)
-        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
-            return unauthorizedResponse()
-        
-        userid = idinfo['sub']
-
-    except FlowExchangeError:
-        return unauthorizedResponse()
-
-    url = ('https://www.googleapis.com/oauth2/v3/tokeninfo=' + access_token)
+    url = ('https://www.googleapis.com/oauth2/v3/tokeninfo=' + id_token)
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
 
