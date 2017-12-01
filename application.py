@@ -37,9 +37,7 @@ def unauthorizedResponse():
     response.headers['Content-Type'] = 'application/json'
     return response
 
-GOOGLE_CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read()
-)['web']['client_id']
+GOOGLE_CLIENT_ID = '260872726788-7rlgebkleh2t57vut394puic1kbcf1jr.apps.googleusercontent.com'
 
 #=======================================================================
 
