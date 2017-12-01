@@ -156,7 +156,7 @@ def gPlusLogin():
 
     id_token = request.data
 
-    url = ('https://www.googleapis.com/oauth2/v3/tokeninfo=' + id_token)
+    url = ('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + id_token)
     print url
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
