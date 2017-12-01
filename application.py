@@ -12,7 +12,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 dbSession = DBSession()
 
-import json, random, string
+import json, random, string, httplib2
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
