@@ -50,6 +50,7 @@ app = Flask(__name__)
 @app.route('/')
 #@app.route('/catalog/')
 def homePage():
+    session['state'] = generateRandomToken()
     categories = getCategories()
     items = dbSession.query(Item).order_by(Item.id.desc()).limit(10)
     return render_template('home.html',
