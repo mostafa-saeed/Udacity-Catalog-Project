@@ -3,21 +3,27 @@
 {% block content %}
 
 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-    {% for item in items %}
-    
     <div class="mdl-card mdl-cell mdl-cell--12-col">
-        <div class="mdl-card__supporting-text">
-        <h4>{{ item.name }}</h4>
-        {{ item.description }}
+        <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+            <h4 class="mdl-cell mdl-cell--12-col">Recent Items</h4>
+
+            {% for item in items %}
+            <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+                <div class="section__circle-container__circle mdl-color--primary"></div>
+            </div>
+            <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                <h5>{{ item.name }}</h5>
+                {{ item.description }} <a href="{{ url_for('getCategory', categoryName=item.category) }}" class="mdl-button">{{ item.category }}</a>
+            </div>
+            {% endfor %}
+
         </div>
         <div class="mdl-card__actions">
-        <a href="{{ url_for('getCategory', categoryName=item.category) }}" class="mdl-button">{{ item.category }}</a>
+            <a href="#" class="mdl-button">Read our features</a>
         </div>
     </div>
-    
-    {% endfor %}
 </section>
 
+
 {% endblock %}
-
-
+    

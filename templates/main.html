@@ -23,7 +23,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-pink.min.css">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
   </head>
   <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -33,25 +33,33 @@
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
           <h3>Catalog Website</h3>
-          {% if (isAuthenticated) %}
-              <p>Logged In</p>
-          {% else %}
-              <p><a href="#">Sign in</a></p>
-          {% endif %}
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
 
         <div class="mdl-layout__tab-bar-container"><div class="mdl-layout__tab-bar-button mdl-layout__tab-bar-left-button"><i class="material-icons">chevron_left</i></div><div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark mdl-js-ripple-effect--ignore-events" data-upgraded=",MaterialRipple">
-            <a href="#overview" class="mdl-layout__tab is-active">Overview<span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-            <a href="#features" class="mdl-layout__tab">Features<span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-            <a href="#features" class="mdl-layout__tab">Details<span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-            <a href="#features" class="mdl-layout__tab">Technology<span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-            <a href="#features" class="mdl-layout__tab">FAQ<span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add" data-upgraded=",MaterialButton,MaterialRipple">
-                <i class="material-icons" role="presentation">add</i>
-                <span class="visuallyhidden">Add</span>
-            <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+          {% for category in categories %}  
+            <a href="{{ url_for('getCategory', categoryName=category) }}" class="mdl-layout__tab">{{ category }}<span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
+          {% endfor %}
+
+          {% if (isAuthenticated) %}
+            <a href="#" class="mdl-layout__tab is-active">
+                <svg fill="#fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/>
+                  <path d="M0 0h24v24H0z" fill="none"/>
+              </svg>
+              Sign Out
+            <span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
+          {% else %}
+            <a href="#" class="mdl-layout__tab is-active">
+              <svg fill="#fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/>
+            </svg>
+              Sign In
+            <span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
+          {% endif %}
+
             </div><div class="mdl-layout__tab-bar-button mdl-layout__tab-bar-right-button"><i class="material-icons">chevron_right</i></div></div>
       </header>
 
@@ -69,6 +77,6 @@
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
   </body>
 </html>

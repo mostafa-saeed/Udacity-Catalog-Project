@@ -67,7 +67,7 @@ def getItem(itemID):
 @app.route('/items/add/')
 def addItemForm():
     categories = getCategories()
-    return render_template('itemForm.html',
+    return render_template('addItemForm.html',
         categories=categories
     )
 
@@ -87,7 +87,7 @@ def addItem():
 def editItemForm(itemID):
     item = dbSession.query(Item).filter_by(id=itemID).one()
     categories = getCategories()
-    return render_template('itemForm.html',
+    return render_template('editItemForm.html',
         item=item,
         categories=categories
     )
