@@ -245,7 +245,15 @@ form {
   width: 100%;
 }
 
+button[type="submit"] {
+  margin: 20px;
+}
+
 .mdl-textfield {
   width: 90%;
   max-width: 860px;
+}
+
+.demo-list-two {
+  width: 300px;
 }

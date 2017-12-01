@@ -38,10 +38,6 @@
         </div>
 
         <div class="mdl-layout__tab-bar-container"><div class="mdl-layout__tab-bar-button mdl-layout__tab-bar-left-button"><i class="material-icons">chevron_left</i></div><div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark mdl-js-ripple-effect--ignore-events" data-upgraded=",MaterialRipple">
-          {% for category in categories %}  
-            <a href="{{ url_for('getCategory', categoryName=category) }}" class="mdl-layout__tab">{{ category }}<span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-          {% endfor %}
-
           {% if (isAuthenticated) %}
           <a href="{{ url_for('addItemForm') }}" class="mdl-layout__tab">Add Item<span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>  
           <a href="#" class="mdl-layout__tab is-active">
