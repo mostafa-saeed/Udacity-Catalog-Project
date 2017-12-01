@@ -147,8 +147,7 @@ def getAllItems():
 
 @app.route('/gconnect', methods=['POST'])
 def gPlusLogin():
-    print 'testing Req' + request.args.get('state')
-    print 'testing Session' + session['state']
+    print 'Testing' + session
 
     if request.args.get('state') != session['state']:
         response = unauthorizedResponse('Invalid state parameter')
