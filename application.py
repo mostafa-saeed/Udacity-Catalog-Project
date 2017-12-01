@@ -147,11 +147,15 @@ def getAllItems():
 
 @app.route('/gconnect', methods=['POST'])
 def gPlusLogin():
+    print 'testing Req' + request.args.get('state')
+    print 'testing Session' + session['state']
+
     if request.args.get('state') != session['state']:
         response = unauthorizedResponse('Invalid state parameter')
         return response
 
     id_token = request.data
+    print 'testing id_token' + id_token
 
     url = ('https://www.googleapis.com/oauth2/v3/tokeninfo=' + id_token)
     h = httplib2.Http()
