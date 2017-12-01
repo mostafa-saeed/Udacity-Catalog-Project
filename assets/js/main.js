@@ -25,19 +25,16 @@ function onSignIn(googleUser) {
 
         $.ajax({
             type: 'POST',
-            url: '/gconnect?state=' + state + '/',
+            url: '/gconnect?state=' + state,
             processData: false,
             data: id_token,
             contentType: 'application/octet-stream; charset=utf-8',
             success: function(result) {
-                // Handle or verify the server response if necessary.
-                if (result) {
-                    console.log('Auth Done', result);
-                    window.location.href = "/catalog";
-                }
-                else {
-                    alert('Failed to make a server-side call. Check your configuration and console.');
-                }
+                console.log('Auth Done', result);
+                window.location.href = "/catalog";
+            },
+            error: function(jqXHR, status, err) {
+                console.log('Error', err);
             }
         });
     }

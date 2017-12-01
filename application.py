@@ -31,9 +31,8 @@ def getCategories():
         categories.append(str(item.category))
     return categories
 
-def unauthorizedResponse():
-    response = make_response(json.dumps(
-            'Failed to upgrade the authorization code.'), 401)
+def unauthorizedResponse(message):
+    response = make_response(json.dumps(message), 401)
     response.headers['Content-Type'] = 'application/json'
     return response
 
@@ -149,7 +148,7 @@ def getAllItems():
 @app.route('/gconnect', methods=['POST'])
 def gPlusLogin():
     if request.args.get('state') != session['state']:
-        response = unauthorizedResponse()
+        response = unauthorizedResponse('Invalid state parameter')
         return response
 
     id_token = request.data
@@ -159,7 +158,7 @@ def gPlusLogin():
     result = json.loads(h.request(url, 'GET')[1])
 
     if result['aud'] != GOOGLE_CLIENT_ID:
-        response = unauthorizedResponse()
+        response = unauthorizedResponse("Token's client ID does not match app's")
         return response
 
     user = getOrCreateUser(result['email'])
