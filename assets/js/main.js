@@ -10,33 +10,41 @@ $(".mdl-button[type='submit']").click(function (event){
 });
 
 
-function signInCallback(authResult) {
-    console.log(authResult);
-    if( authResult['code']) {
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    var email = profile.getEmail();
+
+    console.log('profile', profile);
+
+    if( email ) {
 
         // Send the one-time-use code to the server, if the server responds,
         // write a 'login successful' message to the web page and then redirect
         // back to the main page.
+
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+        
         var state = $('#state').val();
         console.log('state', state);
 
-        $.ajax({
-            type: 'POST',
-            url: '/gconnect?state=' + state,
-            processData: false,
-            data: authResult['code'],
-            contentType: 'application/octet-stream; charset=utf-8',
-            success: function(result) {
-                // Handle or verify the server response if necessary.
-                if (result) {
-                    console.log('Auth Done', result);
-                    window.location.href = "/catalog";
-                } else if (authResult['error']) {
-                    console.log('There was an error: ' + authResult['error']);
-                } else {
-                    alert('Failed to make a server-side call. Check your configuration and console.');
-                }
-            }
-        });
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/gconnect?state=' + state,
+        //     processData: false,
+        //     data: authResult['code'],
+        //     contentType: 'application/octet-stream; charset=utf-8',
+        //     success: function(result) {
+        //         // Handle or verify the server response if necessary.
+        //         if (result) {
+        //             console.log('Auth Done', result);
+        //             window.location.href = "/catalog";
+        //         } else if (authResult['error']) {
+        //             console.log('There was an error: ' + authResult['error']);
+        //         } else {
+        //             alert('Failed to make a server-side call. Check your configuration and console.');
+        //         }
+        //     }
+        // });
     }
 }
