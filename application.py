@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for, session
+from flask import Flask, render_template, request, redirect, jsonify, url_for, session, make_response
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -14,6 +14,9 @@ dbSession = DBSession()
 
 import json, random, string
 
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.client import FlowExchangeError
+
 #=======================================================================
 def generateRandomToken():
     return ''.join(random.choice(
@@ -27,6 +30,16 @@ def getCategories():
     for item in itemsCategories:
         categories.append(str(item.category))
     return categories
+
+def unauthorizedResponse():
+    response = make_response(json.dumps(
+            'Failed to upgrade the authorization code.'), 401)
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
+GOOGLE_CLIENT_ID = json.loads(
+    open('client_secrets.json', 'r').read()
+)['web']['client_id']
 
 #=======================================================================
 
@@ -121,6 +134,54 @@ def deleteItem(itemID):
 def getAllItems():
     items = dbSession.query(Item).all()
     return jsonify(items=[c.serialize for c in items])
+
+@app.route('/gconnect/')
+def gPlusLogin():
+    if request.args.get('state') != session['state']:
+        response = unauthorizedResponse()
+        return response
+
+    auth_code = request.data
+
+    try:
+        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
+        oauth_flow.redirect_uri = 'postmessage'
+        credentials = oauth_flow.step2_exchange(auth_code)
+    except FlowExchangeError:
+        return unauthorizedResponse()
+
+    access_token = credentials.access_token
+    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=' + access_token)
+    h = httplib2.Http()
+    result = json.loads(h.request(url, 'GET')[1])
+
+    gplus_id = credentials.id_token['sub']
+
+    stored_credentials = session.get('credentials')
+    stored_gplus_id = session.get('gplus_id')
+
+    if stored_credentials is not None and gplus_id == stored_gplus_id:
+        response = make_response(json.dumps('Current user is already connected.'),
+                                200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
+    session['credentials'] = credentials
+    session['gplus_id'] = gplus_id
+    response = make_response(json.dumps('Successfully connected user.'), 200)
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     app.debug = True
