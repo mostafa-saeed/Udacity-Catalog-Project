@@ -148,6 +148,8 @@ def getAllItems():
 @app.route('/gconnect', methods=['POST'])
 def gPlusLogin():
 
+    print session
+
     if request.args.get('state') != session['state']:
         response = unauthorizedResponse('Invalid state parameter')
         return response
