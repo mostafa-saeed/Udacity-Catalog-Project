@@ -108,7 +108,7 @@ html, body {
 
 .mdl-demo .mdl-layout__content section {
   position: relative;
-  margin-top: 48px;
+  margin-bottom: 48px;
 }
 .mdl-demo section.section--center {
   max-width: 860px;
