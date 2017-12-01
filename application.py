@@ -42,6 +42,7 @@ GOOGLE_CLIENT_ID = '260872726788-7rlgebkleh2t57vut394puic1kbcf1jr.apps.googleuse
 #=======================================================================
 
 app = Flask(__name__)
+app.secret_key = generateRandomToken()
 
 # isAuthenticated && isAuthorized
 # responses
