@@ -14,8 +14,11 @@ dbSession = DBSession()
 
 import json, random, string
 
-from oauth2client.client import flow_from_clientsecrets
-from oauth2client.client import FlowExchangeError
+# from oauth2client.client import flow_from_clientsecrets
+# from oauth2client.client import FlowExchangeError
+
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
 #=======================================================================
 def generateRandomToken():
@@ -36,6 +39,17 @@ def unauthorizedResponse():
             'Failed to upgrade the authorization code.'), 401)
     response.headers['Content-Type'] = 'application/json'
     return response
+
+def getOrCreateUser(email):
+    user = dbSession.query(User).filter_by(email=email).first()
+    if user:
+        return user
+    else:
+        newUser = User(email=email)
+        dbSession.add(newUser)
+        dbSession.commit()
+        return dbSession.query(User).filter_by(email=email).first()
+
 
 GOOGLE_CLIENT_ID = '260872726788-7rlgebkleh2t57vut394puic1kbcf1jr.apps.googleusercontent.com'
 
@@ -141,47 +155,34 @@ def gPlusLogin():
         response = unauthorizedResponse()
         return response
 
-    auth_code = request.data
+    access_token = request.data
 
     try:
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
-        oauth_flow.redirect_uri = 'postmessage'
-        credentials = oauth_flow.step2_exchange(auth_code)
+        idinfo = id_token.verify_oauth2_token(access_token, requests.Request(), GOOGLE_CLIENT_ID)
+        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+            return unauthorizedResponse()
+        
+        userid = idinfo['sub']
+
     except FlowExchangeError:
         return unauthorizedResponse()
 
-    access_token = credentials.access_token
-    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=' + access_token)
+    url = ('https://www.googleapis.com/oauth2/v3/tokeninfo=' + access_token)
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
 
-    gplus_id = credentials.id_token['sub']
-
-    stored_credentials = session.get('credentials')
-    stored_gplus_id = session.get('gplus_id')
-
-    if stored_credentials is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
-                                200)
-        response.headers['Content-Type'] = 'application/json'
+    if result['aud'] != GOOGLE_CLIENT_ID:
+        response = unauthorizedResponse()
         return response
 
-    session['credentials'] = credentials
-    session['gplus_id'] = gplus_id
+    user = getOrCreateUser(result['email'])
+
+    session['email'] = result['email']
+    session['user_id'] = user.id
+    
     response = make_response(json.dumps('Successfully connected user.'), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
-
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     app.debug = True
