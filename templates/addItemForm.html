@@ -10,17 +10,17 @@
             <form action="/items/" method="POST">
 
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" required type="text" id="name" name="name">
+                    <input class="mdl-textfield__input" type="text" id="name" name="name">
                     <label class="mdl-textfield__label" for="name">Item Name</label>
                 </div>
             
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <textarea class="mdl-textfield__input" required type="text" name="description" rows= "3" id="description" ></textarea>
+                    <textarea class="mdl-textfield__input" type="text" name="description" rows= "3" id="description" ></textarea>
                     <label class="mdl-textfield__label" for="description">Item Description</label>
                 </div>
             
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" required id="category" name="category" type="text" list="categories">
+                    <input class="mdl-textfield__input" id="category" name="category" type="text" list="categories">
                     <label class="mdl-textfield__label" for="category">Item Category</label>
                     <datalist id="categories">
                         {% for category in categories %}

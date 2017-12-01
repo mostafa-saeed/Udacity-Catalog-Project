@@ -32,27 +32,22 @@
         <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
             <h4 class="mdl-cell mdl-cell--12-col">Categories</h4>
 
-            <ul class="demo-list-two mdl-list">
+            <ul class="list-icon mdl-list">
 
                 {% for category in categories %}
-                <li class="mdl-list__item mdl-list__item--two-line">
+                <li class="mdl-list__item">
                     <span class="mdl-list__item-primary-content">
                         <svg fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"/>
                             <path d="M0 0h24v24H0z" fill="none"/>
                         </svg>
-                        <span>{{ category }}</span>
-                        <span class="mdl-list__item-sub-title"></span>
-                    </span>
-                    <span class="mdl-list__item-secondary-content">
-                        <span class="mdl-list__item-secondary-info">Count Items</span>
+                        <a href="{{ url_for('getCategory', categoryName=category) }}" class="mdl-layout__tab">{{ category }}<span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
                     </span>
                 </li>
                 {% endfor %}
 
             </ul>
             
-        <a href="{{ url_for('getCategory', categoryName=category) }}" class="mdl-layout__tab">{{ category }}<span class="mdl-layout__tab-ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
         </div>
     </div>
 </section>
