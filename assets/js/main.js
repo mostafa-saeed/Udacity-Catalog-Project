@@ -25,7 +25,7 @@ function onSignIn(googleUser) {
 
         $.ajax({
             type: 'POST',
-            url: '/gconnect?state=' + state,
+            url: '/gconnect?state=' + state + '/',
             processData: false,
             data: id_token,
             contentType: 'application/octet-stream; charset=utf-8',
