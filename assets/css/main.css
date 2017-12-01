@@ -106,7 +106,7 @@ html, body {
   z-index: 999;
 }
 
-.mdl-demo .mdl-layout__content section:not(:last-of-type) {
+.mdl-demo .mdl-layout__content section {
   position: relative;
   margin-top: 48px;
 }
@@ -237,7 +237,7 @@ html, body {
   z-index: 99;
 }
 
-.section--center {
+.section-center {
   text-align: center;
 }
 
