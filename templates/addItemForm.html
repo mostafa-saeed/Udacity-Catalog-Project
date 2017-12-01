@@ -20,13 +20,15 @@
                 </div>
             
                 <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                    <select class="mdl-selectfield__select" id="category" name="category">
+                    <input class="mdl-textfield__input" id="category" name="category" type="text" list="categories">
+                    <datalist id="categories">
                         {% for category in categories %}
-                        <option value="{{ category }}">{{ category }}</option>
+                            <option value="{{ category }}">{{ category }}</option>
                         {% endfor %}
-                    </select>
+                    </datalist>
                     <label class="mdl-selectfield__label" for="category">Item Category</label>
                 </div>
+                
             
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
                 Add Item

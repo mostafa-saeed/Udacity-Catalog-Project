@@ -237,6 +237,14 @@ html, body {
   z-index: 99;
 }
 
+.section--center {
+  text-align: center;
+}
+
+form {
+  width: 100%;
+}
+
 .mdl-textfield {
   width: 90%;
   max-width: 860px;
