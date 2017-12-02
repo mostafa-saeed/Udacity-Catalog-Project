@@ -66,7 +66,12 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'email' not in session:
-            response = unauthorizedResponse('Login is required!')
-            return response
+            return unauthorizedResponse('Login is required!')
         return f(*args, **kwargs)
     return decorated_function
+
+
+def generate_csrf_token():
+    if '_csrf_token' not in session:
+        session['_csrf_token'] = generateRandomToken()
+    return session['_csrf_token']
