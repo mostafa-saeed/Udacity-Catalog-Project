@@ -121,7 +121,9 @@ def editItem(itemID):
     dbSession.add(updatedItem)
     dbSession.commit()
     # return redirect(url_for('homePage'))
-    return 'done'
+    response = make_response(json.dumps('Successfully connected user.'), 200)
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 @app.route('/items/<int:itemID>/delete/')
 def deleteItemForm(itemID):
@@ -135,7 +137,9 @@ def deleteItem(itemID):
     dbSession.delete(item)
     dbSession.commit()
     # return redirect(url_for('homePage'))
-    return 'done'
+    response = make_response(json.dumps('Successfully connected user.'), 200)
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 @app.route('/catalog/api/')
 def getAllItems():
@@ -175,6 +179,10 @@ def gPlusLogin():
 def gPlusLogout():
     del session['email']
     del session['user_id']
+
+    response = make_response(json.dumps('Successfully connected user.'), 200)
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 
 if __name__ == "__main__":
