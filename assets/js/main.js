@@ -33,15 +33,11 @@ $('form[method="put"], form[method="delete"]').submit(function(e) {
 
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    // var email = profile.getEmail();
-
-    console.log('profile', profile);
 
     if( profile ) {
 
         var id_token = googleUser.getAuthResponse().id_token;
         // console.log("ID Token: " + id_token);
-        
         var state = $('#state').val();
 
         $.ajax({
@@ -66,7 +62,7 @@ function signOut() {
     gapi.load('auth2', function() {
         gapi.auth2.init();
 
-        var auth2 = gapi.auth2.getAuthInstance();
+        // var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function () {
     
             $.ajax({
