@@ -83,11 +83,11 @@
     <script src="/assets/js/main.js"></script>
     {% if 'email' in session %}
     <script>
-      function onLoad() {
+      $(document).ready(function() {
         gapi.load('auth2', function() {
           gapi.auth2.init();
         });
-      }
+      });
     </script>
     {% endif %}
   </body>
