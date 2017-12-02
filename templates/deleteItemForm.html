@@ -13,7 +13,7 @@
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
                 Delete {{ item.name }}
                 </button>
-                <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="{{ getItem('link', itemID=item.id) }}">No</a>
+                <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="{{ url_for('getItem', itemID=item.id) }}">No</a>
 
             </form>
 
