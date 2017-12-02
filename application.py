@@ -27,7 +27,7 @@ with app.open_resource('client_secrets.json') as f:
 # link: http://flask.pocoo.org/snippets/3/
 @app.before_request
 def csrf_protect():
-    if request.method in ['POST', 'PUT']:
+    if '/items' in request.url_root and request.method in ['POST', 'PUT']:
         token = session.pop('_csrf_token', None)
         if not token or token != request.form.get('_csrf_token'):
             return unauthorizedResponse('Missing CSRF Token!')
