@@ -29,6 +29,8 @@
                     </datalist>
                 </div>
 
+                <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
                 Update Item
                 </button>
