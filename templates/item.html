@@ -13,7 +13,7 @@
         </div>
     </div>
     
-    {% if 'user_id' in session and session['user_id'] == item.id %}
+    {% if 'user_id' in session and session['user_id'] == item.createdBy %}
     <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="menu">
         <svg fill="#616161" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0h24v24H0z" fill="none"/>
