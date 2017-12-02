@@ -126,11 +126,11 @@ def editItemForm(itemID):
 @app.route('/items/<int:itemID>/', methods=['PUT'])
 @login_required
 def editItem(itemID):
-    if session['user_id'] != item.user_id:
+    updatedItem = dbSession.query(Item).filter_by(id=itemID).one()
+    if session['user_id'] != updatedItem.createdBy:
         response = unauthorizedResponse('Wrong Access!')
         return response
 
-    updatedItem = dbSession.query(Item).filter_by(id=itemID).one()
     updatedItem.name = request.form['name']
     updatedItem.description = request.form['description']
     updatedItem.category = request.form['category']
@@ -151,11 +151,11 @@ def deleteItemForm(itemID):
 @app.route('/items/<int:itemID>/', methods=['DELETE'])
 @login_required
 def deleteItem(itemID):
-    if session['user_id'] != item.user_id:
+    item = dbSession.query(Item).filter_by(id=itemID).one()
+    if session['user_id'] != item.createdBy:
         response = unauthorizedResponse('Wrong Access!')
         return response
 
-    item = dbSession.query(Item).filter_by(id=itemID).one()
     dbSession.delete(item)
     dbSession.commit()
     # return redirect(url_for('homePage'))

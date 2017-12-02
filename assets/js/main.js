@@ -56,6 +56,7 @@ function onSignIn(googleUser) {
             },
             error: function(jqXHR, status, err) {
                 console.log('Error', err);
+                alert(err);
             }
         });
     }
