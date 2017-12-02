@@ -257,3 +257,7 @@ button[type="submit"] {
 .list-icon {
   width: 300px;
 }
+
+.g-signin2 {
+  margin: 15px 0;
+}

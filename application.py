@@ -125,7 +125,7 @@ def editItem(itemID):
 @app.route('/items/<int:itemID>/delete/')
 def deleteItemForm(itemID):
     item = dbSession.query(Item).filter_by(id=itemID).one()
-    return render_template('itemDeleteForm.html',
+    return render_template('deleteItemForm.html',
         item=item)
 
 @app.route('/items/<int:itemID>/', methods=['DELETE'])

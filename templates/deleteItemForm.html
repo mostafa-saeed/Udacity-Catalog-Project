@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+
+{% block content %}
+<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    <div class="mdl-card mdl-cell mdl-cell--12-col">
+        <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+            <h4 class="mdl-cell mdl-cell--12-col">Delete: {{ item.name }}</h4>
+
+            <form action="/items/{{ item.id }}/" method="DELETE">
+
+                <p>Are you sure ?</p>
+
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
+                Delete {{ item.name }}
+                </button>
+                <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" href="{{ getItem('link', itemID=item.id) }}">No</a>
+
+            </form>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

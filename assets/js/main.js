@@ -5,16 +5,37 @@ $(".mdl-textfield__input").blur(function (){
     }
 });
 $(".mdl-button[type='submit']").click(function (event){
-    $(this).siblings(".mdl-textfield").addClass('is-invalid');
+    // $(this).siblings(".mdl-textfield").addClass('is-invalid');
     $(this).siblings(".mdl-textfield").children(".mdl-textfield__input").prop('required', true);
 });
 
+$('form[method="put"], form[method="delete"]').submit(function(e) {
+    e.preventDefault();
+    
+    var method = $(this).attr('method');
+    var url = $(this).attr('action');
+    var data = $(this).serializeArray();
+
+    // send Ajax request instead!
+    $.ajax({
+        type: method,
+        url: url,
+        data: data,
+        success: function(result) {
+            console.log('Req Done', result);
+            // window.location.href = "/";
+        },
+        error: function(jqXHR, status, err) {
+            console.log('Error', err);
+        }
+    });
+})
 
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     // var email = profile.getEmail();
 
-    // console.log('profile', profile);
+    console.log('profile', profile);
 
     if( profile ) {
 
@@ -39,6 +60,11 @@ function onSignIn(googleUser) {
         });
     }
 }
+
+
+gapi.load('auth2', function() {
+    gapi.auth2.init();
+});
 
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
