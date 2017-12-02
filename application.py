@@ -121,7 +121,7 @@ def editItem(itemID):
     dbSession.add(updatedItem)
     dbSession.commit()
     # return redirect(url_for('homePage'))
-    response = make_response(json.dumps('Successfully connected user.'), 200)
+    response = make_response(json.dumps('Successfully Updated Item.'), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
 
@@ -137,7 +137,7 @@ def deleteItem(itemID):
     dbSession.delete(item)
     dbSession.commit()
     # return redirect(url_for('homePage'))
-    response = make_response(json.dumps('Successfully connected user.'), 200)
+    response = make_response(json.dumps('Successfully Deleted Item.'), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
 
@@ -180,7 +180,7 @@ def gPlusLogout():
     del session['email']
     del session['user_id']
 
-    response = make_response(json.dumps('Successfully connected user.'), 200)
+    response = make_response(json.dumps('Successfully disconnected user.'), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
 
