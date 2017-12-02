@@ -16,12 +16,11 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 dbSession = DBSession()
 
-GOOGLE_CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
-
-
 app = Flask(__name__)
 app.secret_key = 'MY_APP_SECRET_KEY'
+
+with app.open_resource('client_secrets.json') as f:
+    GOOGLE_CLIENT_ID = json.load(f)['web']['client_id']
 
 
 @app.route('/')

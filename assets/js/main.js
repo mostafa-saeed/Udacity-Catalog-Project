@@ -5,7 +5,6 @@ $(".mdl-textfield__input").blur(function (){
     }
 });
 $(".mdl-button[type='submit']").click(function (event){
-    // $(this).siblings(".mdl-textfield").addClass('is-invalid');
     $(this).siblings(".mdl-textfield").children(".mdl-textfield__input").prop('required', true);
 });
 
