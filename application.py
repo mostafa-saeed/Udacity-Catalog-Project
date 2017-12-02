@@ -120,7 +120,7 @@ def editItem(itemID):
 
     dbSession.add(updatedItem)
     dbSession.commit()
-    return redirect(url_for('homePage'))
+    # return redirect(url_for('homePage'))
 
 @app.route('/items/<int:itemID>/delete/')
 def deleteItemForm(itemID):
@@ -133,7 +133,7 @@ def deleteItem(itemID):
     item = dbSession.query(Item).filter_by(id=itemID).one()
     dbSession.delete(item)
     dbSession.commit()
-    return redirect(url_for('homePage'))
+    # return redirect(url_for('homePage'))
 
 @app.route('/catalog/api/')
 def getAllItems():
