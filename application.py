@@ -17,6 +17,8 @@ import json, random, string, httplib2
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 
+from functools import wraps
+
 #=======================================================================
 def generateRandomToken():
     return ''.join(random.choice(
@@ -46,13 +48,22 @@ def getOrCreateUser(email):
         dbSession.commit()
         return dbSession.query(User).filter_by(email=email).first()
 
+# Decorator for required logins
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'email' not in session:
+            response = unauthorizedResponse('Login is required!')
+            return response
+        return f(*args, **kwargs)
+    return decorated_function
 
 GOOGLE_CLIENT_ID = '260872726788-7rlgebkleh2t57vut394puic1kbcf1jr.apps.googleusercontent.com'
 
 #=======================================================================
 
 app = Flask(__name__)
-app.secret_key = generateRandomToken()
+app.secret_key = 'MY_APP_SECRET_KEY'
 
 # isAuthenticated && isAuthorized
 
@@ -91,6 +102,7 @@ def addItemForm():
     )
 
 @app.route('/items/', methods=['POST'])
+@login_required
 def addItem():
     newItem = Item(
         name = request.form['name'],
@@ -112,7 +124,12 @@ def editItemForm(itemID):
     )
 
 @app.route('/items/<int:itemID>/', methods=['PUT'])
+@login_required
 def editItem(itemID):
+    if session['user_id'] != item.user_id:
+        response = unauthorizedResponse('Wrong Access!')
+        return response
+
     updatedItem = dbSession.query(Item).filter_by(id=itemID).one()
     updatedItem.name = request.form['name']
     updatedItem.description = request.form['description']
@@ -132,7 +149,12 @@ def deleteItemForm(itemID):
         item=item)
 
 @app.route('/items/<int:itemID>/', methods=['DELETE'])
+@login_required
 def deleteItem(itemID):
+    if session['user_id'] != item.user_id:
+        response = unauthorizedResponse('Wrong Access!')
+        return response
+
     item = dbSession.query(Item).filter_by(id=itemID).one()
     dbSession.delete(item)
     dbSession.commit()
@@ -149,8 +171,6 @@ def getAllItems():
 @app.route('/gconnect', methods=['POST'])
 def gPlusLogin():
 
-    print session
-
     if request.args.get('state') != session['state']:
         response = unauthorizedResponse('Invalid state parameter')
         return response
@@ -158,7 +178,6 @@ def gPlusLogin():
     id_token = request.data
 
     url = ('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + id_token)
-    print url
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
 

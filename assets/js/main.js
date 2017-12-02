@@ -23,7 +23,7 @@ $('form[method="put"], form[method="delete"]').submit(function(e) {
         data: data,
         success: function(result) {
             console.log('Req Done', result);
-            // window.location.href = "/";
+            window.location.href = "/";
         },
         error: function(jqXHR, status, err) {
             console.log('Error', err);
@@ -70,12 +70,9 @@ function signOut() {
     
             $.ajax({
                 type: 'POST',
-                url: '/gconnect?state=' + state,
-                processData: false,
-                data: id_token,
-                contentType: 'application/octet-stream; charset=utf-8',
-                success: function(result) {
-                    console.log('Auth Done', result);
+                url: '/gdisconnect',
+                success: function() {
+                    console.log('Sign Out Done');
                     window.location.href = "/";
                 },
                 error: function(jqXHR, status, err) {
