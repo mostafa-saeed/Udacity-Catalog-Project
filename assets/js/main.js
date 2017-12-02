@@ -58,24 +58,18 @@ function onSignIn(googleUser) {
 }
 
 function signOut() {
-    gapi.load('auth2', function() {
-        gapi.auth2.init();
-
-        // var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-    
-            $.ajax({
-                type: 'POST',
-                url: '/gdisconnect',
-                success: function() {
-                    console.log('Sign Out Done');
-                    window.location.href = "/";
-                },
-                error: function(jqXHR, status, err) {
-                    console.log('Error', err);
-                }
-            });
-    
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/gdisconnect',
+            success: function() {
+                console.log('Sign Out Done');
+                window.location.href = "/";
+            },
+            error: function(jqXHR, status, err) {
+                console.log('Error', err);
+            }
         });
     });
 }
