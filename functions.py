@@ -34,26 +34,27 @@ def getCategories():
     return categories
 
 
+# Send 401 unauthorized response with a message
 def unauthorizedResponse(message):
     response = make_response(json.dumps(message), 401)
     response.headers['Content-Type'] = 'application/json'
     return response
 
 
+# Send 200 success response with a message
 def successResponse(message):
     response = make_response(json.dumps(message), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
 
 
-# try to find a user in the database using email
-# return the user if was found
-# or create a new user then return it
 def getOrCreateUser(email):
+    # try to find a user in the database using email
     user = dbSession.query(User).filter_by(email=email).first()
     if user:
         return user
     else:
+        # or create a new user then return it
         newUser = User(email=email)
         dbSession.add(newUser)
         dbSession.commit()
@@ -71,6 +72,7 @@ def login_required(f):
     return decorated_function
 
 
+# CSRF token generator
 def generate_csrf_token():
     if '_csrf_token' not in session:
         session['_csrf_token'] = generateRandomToken()
