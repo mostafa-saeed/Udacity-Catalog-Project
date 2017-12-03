@@ -36,7 +36,42 @@ In this demo the static file 'assets' are being served using apache. So you have
 * Apache server
 
 ## Server configurations
-* `Key-based` SSH authentication is enforced (No password authentication).
-* SSH Port is `2200`
-* Apache mod_wsgi
-* Allowed apache to serve `static files`
+### Update all currently installed packages.
+* `sudo apt update`
+* `sudo apt upgrade`
+
+### Change the SSH port from 22 to 2200.
+* Use `sudo vim /etc/ssh/sshd_config` and then change Port 22 to Port 2200 , save & quit.
+* Reload SSH using `sudo service ssh restart`.
+
+### Configure the Uncomplicated Firewall (UFW).
+* Use `sudo ufw default deny incoming` to deny all incoming connections by default.
+* Use `sudo ufw default allow outgoing` to allow all outgoing connections by default.
+* Use `sudo ufw allow 2200` to allow the new SSH port.
+* Use `sudo ufw allow www` to allow HTTP requests.
+* Use `sudo ufw allow ntp` to allow the NTP port.
+* Now let's active our firewall using `sudo ufw enable`.
+
+### Install and configure Apache.
+* Use `sudo apt install apache2` to install apache server.
+* Use `sudo vim /etc/apache2/sites-enabled/000-default.conf` to configure Apache.
+* Inside the `<VirtualHost *:80>` Add `WSGIScriptAlias / /path/to/Udacity-Catalog-Project/application.wsgi` to make apache serve the application.
+* Serve static files (optional): Add the following code (Also inside the `<VirtualHost *:80>`):
+```
+Alias /assets/ /home/ubuntu/Udacity-Catalog-Project/assets/
+
+<Directory /home/ubuntu/Udacity-Catalog-Project/assets>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Require all granted
+    allow from all
+</Directory>
+```
+* Now let's restart apache using `sudo service apache2 restart`.
+
+### Install and configure PostgreSQL.
+* Use `sudo apt install postgresql postgresql-contrib` to install PostgreSQL.
+* Use `sudo -u postgres psql` to access database server as root user.
+* Create new database using `CREATE DATABASE catalog`.
+* Create new user using `CREATE USER catalog WITH ENCRYPTED PASSWORD '123';`.
+* Grant the new user access to the database using `GRANT ALL PRIVILEGES ON DATABASE "catalog" TO catalog;`.
